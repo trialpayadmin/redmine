@@ -93,7 +93,7 @@ namespace :redmine do
         # If this attribute is set a milestone has a defined target timepoint
         def due
           if read_attribute(:due) && read_attribute(:due) > 0
-            Time.at(read_attribute(:due)).to_date
+            Time.at(read_attribute(:due)/1000000).to_date
           else
             nil
           end
@@ -101,7 +101,7 @@ namespace :redmine do
         # This is the real timepoint at which the milestone has finished.
         def completed
           if read_attribute(:completed) && read_attribute(:completed) > 0
-            Time.at(read_attribute(:completed)).to_date
+            Time.at(read_attribute(:completed)/1000000).to_date
           else
             nil
           end
@@ -121,7 +121,7 @@ namespace :redmine do
         self.table_name = :attachment
         set_inheritance_column :none
 
-        def time; Time.at(read_attribute(:time)) end
+        def time; Time.at(read_attribute(:time)/1000000) end
 
         def original_filename
           filename
@@ -186,8 +186,8 @@ namespace :redmine do
           read_attribute(:description).blank? ? summary : read_attribute(:description)
         end
 
-        def time; Time.at(read_attribute(:time)) end
-        def changetime; Time.at(read_attribute(:changetime)) end
+        def time; Time.at(read_attribute(:time)/1000000) end
+        def changetime; Time.at(read_attribute(:changetime)/1000000) end
       end
 
       class TracTicketChange < ActiveRecord::Base
@@ -198,7 +198,7 @@ namespace :redmine do
           super.select {|column| column.name.to_s != 'field'}
         end
 
-        def time; Time.at(read_attribute(:time)) end
+        def time; Time.at(read_attribute(:time)/1000000) end
       end
 
       TRAC_WIKI_PAGES = %w(InterMapTxt InterTrac InterWiki RecentChanges SandBox TracAccessibility TracAdmin TracBackup TracBrowser TracCgi TracChangeset \
@@ -222,7 +222,7 @@ namespace :redmine do
           TracMigrate::TracAttachment.all(:conditions => ["type = 'wiki' AND id = ?", self.id.to_s])
         end
 
-        def time; Time.at(read_attribute(:time)) end
+        def time; Time.at(read_attribute(:time)/1000000) end
       end
 
       class TracPermission < ActiveRecord::Base
