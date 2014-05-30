@@ -626,7 +626,7 @@ namespace :redmine do
 
       def self.set_trac_adapter(adapter)
         return false if adapter.blank?
-        raise "Unknown adapter: #{adapter}!" unless %w(sqlite3 mysql postgresql).include?(adapter)
+        raise "Unknown adapter: #{adapter}!" unless %w(sqlite3 mysql2 mysql postgresql).include?(adapter)
         # If adapter is sqlite or sqlite3, make sure that trac.db exists
         raise "#{trac_db_path} doesn't exist!" if %w(sqlite3).include?(adapter) && !File.exist?(trac_db_path)
         @@trac_adapter = adapter
