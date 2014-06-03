@@ -64,7 +64,7 @@ class Mailer < ActionMailer::Base
     references issue
     @author = journal.user
     s = "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] "
-    s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
+    #s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
     s << issue.subject
     @issue = issue
     @users = to_users + cc_users
