@@ -1,3 +1,5 @@
+<%= link_to(h("##{@issue.id}"), @issue_url) %><br/>
+
 <% if @journal.private_notes? %>
   (<%= l(:field_private_notes) %>)
 <% end %>

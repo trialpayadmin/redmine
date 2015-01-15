@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem "rails", "3.2.19"
+#gem "rails", "3.2.17"
 gem "rake", "~> 10.1.1"
 gem "jquery-rails", "~> 2.0.2"
 gem "coderay", "~> 1.1.0"
@@ -8,6 +9,7 @@ gem "fastercsv", "~> 1.5.0", :platforms => [:mri_18, :mingw_18, :jruby]
 gem "builder", "3.0.0"
 gem "mime-types"
 gem "awesome_nested_set", "2.1.6"
+gem "fcgi"
 
 # Optional gem for LDAP authentication
 group :ldap do
@@ -86,7 +88,7 @@ end
 
 group :test do
   gem "shoulda", "~> 3.3.2"
-  gem "mocha", "~> 1.0.0", :require => 'mocha/api'
+  gem "mocha", ">= 0.14", :require => 'mocha/api'
   if RUBY_VERSION >= '1.9.3'
     gem "capybara", "~> 2.1.0"
     gem "selenium-webdriver"

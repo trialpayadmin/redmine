@@ -115,6 +115,23 @@ module ApplicationHelper
       )
   end
 
+  # Generates a link to a TRIALPAY SCM revision
+  # Options:
+  # * :text - Link text (default to the formatted revision)
+  def link_to_revision2(revision, repository, options={})
+    if repository.is_a?(Project)
+      repository = repository.repository
+    end
+    text = options.delete(:text) || format_revision(revision)
+    rev = revision.respond_to?(:identifier) ? revision.identifier : revision
+    repo_name = repository.identifier == "mobile_git" ? "/mobile" : ""
+    link_to(
+        h(text) + " (see with trac)",
+        "https://trac.trialpay.com/trac/changeset/" + rev + repo_name, 
+        :title => l(:label_revision_id, format_revision(revision))
+      )
+  end
+
   # Generates a link to a message
   def link_to_message(message, options={}, html_options = nil)
     link_to(

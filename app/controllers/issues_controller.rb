@@ -448,7 +448,7 @@ class IssuesController < ApplicationController
   def parse_params_for_bulk_issue_attributes(params)
     attributes = (params[:issue] || {}).reject {|k,v| v.blank?}
     attributes.keys.each {|k| attributes[k] = '' if attributes[k] == 'none'}
-    if custom = attributes[:custom_field_values]
+    if custom = attributes["custom_field_values"]
       custom.reject! {|k,v| v.blank?}
       custom.keys.each do |k|
         if custom[k].is_a?(Array)
