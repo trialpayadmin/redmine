@@ -209,6 +209,10 @@ class Repository < ActiveRecord::Base
     scm.branches
   end
 
+  def branches_in(rev)
+    scm.branches_in(rev)
+  end
+
   def tags
     scm.tags
   end

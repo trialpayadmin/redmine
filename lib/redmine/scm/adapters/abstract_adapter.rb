@@ -140,6 +140,10 @@ module Redmine
           return nil
         end
 
+        def branches_in(rev)
+          return nil
+        end
+
         def tags
           return nil
         end

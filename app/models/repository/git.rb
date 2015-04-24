@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Redmine - project management software
 # Copyright (C) 2006-2014  Jean-Philippe Lang
 # Copyright (C) 2007  Patrick Aljord patcito@ŋmail.com
@@ -73,6 +74,10 @@ class Repository::Git < Repository
 
   def branches
     scm.branches
+  end
+
+  def branches_in(rev)
+    scm.branches_in(rev)
   end
 
   def tags

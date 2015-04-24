@@ -33,7 +33,7 @@ module MyHelper
   def issuesassignedtome_items
     Issue.visible.open.
       where(:assigned_to_id => ([User.current.id] + User.current.group_ids)).
-      limit(10).
+      limit(25).
       includes(:status, :project, :tracker, :priority).
       order("#{IssuePriority.table_name}.position DESC, #{Issue.table_name}.updated_on DESC").
       all
@@ -42,20 +42,20 @@ module MyHelper
   def issuesreportedbyme_items
     Issue.visible.
       where(:author_id => User.current.id).
-      limit(10).
+      limit(25).
       includes(:status, :project, :tracker).
       order("#{Issue.table_name}.updated_on DESC").
       all
   end
 
   def issueswatched_items
-    Issue.visible.on_active_project.watched_by(User.current.id).recently_updated.limit(10).all
+    Issue.visible.on_active_project.watched_by(User.current.id).recently_updated.limit(25).all
   end
 
   def news_items
     News.visible.
       where(:project_id => User.current.projects.map(&:id)).
-      limit(10).
+      limit(25).
       includes(:project, :author).
       order("#{News.table_name}.created_on DESC").
       all

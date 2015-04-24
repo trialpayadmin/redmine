@@ -78,6 +78,25 @@ module Redmine
           end
         end
 
+        def branches_in(changeset)
+          return @branches_in if @branches_in
+          @branches_in = []
+          cmd_args = ["branch", "--no-color", "--verbose", "--no-abbrev", "--contains", changeset]
+          git_cmd(cmd_args) do |io|
+            io.each_line do |line|
+              branch_rev = line.match('\s*(\*?)\s*(.*?)\s*([0-9a-f]{40}).*$')
+              bran = GitBranch.new(branch_rev[2])
+              bran.revision =  branch_rev[3]
+              bran.scmid    =  branch_rev[3]
+              bran.is_default = ( branch_rev[1] == '*' )
+              @branches_in << bran
+            end
+          end
+          @branches_in.sort!
+        rescue ScmCommandAborted
+          nil
+        end
+
         def branches
           return @branches if @branches
           @branches = []

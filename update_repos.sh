@@ -5,6 +5,8 @@ cd /mnt/redmine/redmine-dt/repos/mobile.git
 git fetch --all 
 cd /mnt/redmine/redmine-dt/repos/combus.git 
 git fetch --all
-curl -k "http://redmine.trialpay.com:3000/sys/fetch_changesets?key=nCPiQxPypDcGb2wTn9nZ" 
+cd /mnt/redmine/redmine-dt/repos/managiant.git 
+git fetch --all
+curl -k "https://redmine.trialpay.com/sys/fetch_changesets?key=nCPiQxPypDcGb2wTn9nZ" 
 
 
