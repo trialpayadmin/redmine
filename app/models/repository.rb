@@ -229,8 +229,8 @@ class Repository < ActiveRecord::Base
     scm.cat(path, identifier)
   end
 
-  def diff(path, rev, rev_to)
-    scm.diff(path, rev, rev_to)
+  def diff(path, rev, rev_to, context_lines=10)
+    scm.diff(path, rev, rev_to, context_lines)
   end
 
   def diff_format_revisions(cs, cs_to, sep=':')

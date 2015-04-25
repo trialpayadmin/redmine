@@ -199,7 +199,7 @@ module Redmine
           revisions
         end
 
-        def diff(path, identifier_from, identifier_to=nil)
+        def diff(path, identifier_from, identifier_to=nil, context_lines=10)
           path ||= ''
           identifier_from = (identifier_from and identifier_from.to_i > 0) ? identifier_from.to_i : ''
 
@@ -208,9 +208,11 @@ module Redmine
           cmd = "#{self.class.sq_bin} diff -r "
           cmd << "#{identifier_to}:"
           cmd << "#{identifier_from}"
+          cmd << " --diff-cmd=diff -x -U" + context_lines.to_s
           cmd << " #{target(path)}@#{identifier_from}"
           cmd << credentials_string
           diff = []
+          logger.info(cmd)
           shellout(cmd) do |io|
             io.each_line do |line|
               diff << line

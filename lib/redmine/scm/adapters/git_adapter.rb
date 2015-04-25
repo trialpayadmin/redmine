@@ -330,15 +330,17 @@ module Redmine
           end
         end
 
-        def diff(path, identifier_from, identifier_to=nil)
+        def diff(path, identifier_from, identifier_to=nil, context_lines=10)
           path ||= ''
           cmd_args = []
           if identifier_to
-            cmd_args << "diff" << "--no-color" <<  identifier_to << identifier_from
+            cmd_args << "diff" << "--no-color" << identifier_to << identifier_from
           else
             cmd_args << "show" << "--no-color" << identifier_from
           end
+          cmd_args << "-U" + context_lines.to_s
           cmd_args << "--" <<  scm_iconv(@path_encoding, 'UTF-8', path) unless path.empty?
+          logger.info(cmd_args)
           diff = []
           git_cmd(cmd_args) do |io|
             io.each_line do |line|
