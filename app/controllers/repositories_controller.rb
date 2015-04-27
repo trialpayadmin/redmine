@@ -261,16 +261,31 @@ class RepositoriesController < ApplicationController
     else
       @diff_type = params[:type] || User.current.pref[:diff_type] || 'inline'
       @diff_type = 'inline' unless %w(inline sbs).include?(@diff_type)
+      @context_lines = params[:context_lines] || User.current.pref[:context_lines] || '12'
+      @white_space   = params[:white_space]   || User.current.pref[:white_space] || '0'
 
       # Save diff type as user preference
       if User.current.logged? && @diff_type != User.current.pref[:diff_type]
         User.current.pref[:diff_type] = @diff_type
         User.current.preference.save
       end
+
+      # Save context_lines as user preference
+      if User.current.logged? && @context_lines != User.current.pref[:context_lines]
+        User.current.pref[:context_lines] = @context_lines
+        User.current.preference.save
+      end
+      
+      # Save white_space as user preference
+      if User.current.logged? && @white_space != User.current.pref[:white_space]
+        User.current.pref[:white_space] = @white_space
+        User.current.preference.save
+      end
+
       @cache_key = "repositories/diff/#{@repository.id}/" +
-                      Digest::MD5.hexdigest("#{@path}-#{@rev}-#{@rev_to}-#{@diff_type}-#{current_language}")
+        Digest::MD5.hexdigest("#{@path}-#{@rev}-#{@rev_to}-#{@diff_type}-#{current_language}-#{@context_lines}-#{@white_space}")
       unless read_fragment(@cache_key)
-        @diff = @repository.diff(@path, @rev, @rev_to)
+        @diff = @repository.diff(@path, @rev, @rev_to, @context_lines.to_i, @white_space.to_i)
         show_error_not_found unless @diff
       end
 

@@ -330,7 +330,7 @@ module Redmine
           end
         end
 
-        def diff(path, identifier_from, identifier_to=nil, context_lines=10)
+        def diff(path, identifier_from, identifier_to=nil, context_lines=10, white_space_handling=0)
           path ||= ''
           cmd_args = []
           if identifier_to
@@ -338,7 +338,18 @@ module Redmine
           else
             cmd_args << "show" << "--no-color" << identifier_from
           end
+          
+          # TrialPay: context lines
           cmd_args << "-U" + context_lines.to_s
+          
+          # TrialPay: white space
+          case white_space_handling
+          when 1 # ignore all
+            cmd_args << "--ignore-all-space"
+          when 2 # ignore eol
+            cmd_args << "--ignore-blank-lines"
+          end
+
           cmd_args << "--" <<  scm_iconv(@path_encoding, 'UTF-8', path) unless path.empty?
           logger.info(cmd_args)
           diff = []

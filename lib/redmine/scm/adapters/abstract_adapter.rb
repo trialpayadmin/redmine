@@ -160,7 +160,7 @@ module Redmine
           return nil
         end
 
-        def diff(path, identifier_from, identifier_to=nil, context_lines=10)
+        def diff(path, identifier_from, identifier_to=nil, context_lines=10, white_space_handling=0)
           return nil
         end
 

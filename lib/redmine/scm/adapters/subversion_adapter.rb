@@ -199,16 +199,29 @@ module Redmine
           revisions
         end
 
-        def diff(path, identifier_from, identifier_to=nil, context_lines=10)
+        def diff(path, identifier_from, identifier_to=nil, context_lines=10, white_space_handling=0)
           path ||= ''
           identifier_from = (identifier_from and identifier_from.to_i > 0) ? identifier_from.to_i : ''
 
           identifier_to = (identifier_to and identifier_to.to_i > 0) ? identifier_to.to_i : (identifier_from.to_i - 1)
 
-          cmd = "#{self.class.sq_bin} diff -r "
-          cmd << "#{identifier_to}:"
+          cmd = "#{self.class.sq_bin} diff"
+          
+          # TrialPay: context lines
+          cmd << " --diff-cmd=/usr/bin/diff"
+          extended = " -U" + context_lines.to_s
+
+          # TrialPay: white space
+          case white_space_handling
+          when 1 # ignore all
+            extended << " --ignore-all-space --ignore-blank-lines"
+          when 2 # ignore blank lines
+            extended << " --ignore-blank-lines"
+          end
+          cmd << " -x \"" << extended << "\""
+
+          cmd << " -r #{identifier_to}:"
           cmd << "#{identifier_from}"
-          cmd << " --diff-cmd=diff -x -U" + context_lines.to_s
           cmd << " #{target(path)}@#{identifier_from}"
           cmd << credentials_string
           diff = []
@@ -218,6 +231,7 @@ module Redmine
               diff << line
             end
           end
+          logger.info(diff)
           return nil if $? && $?.exitstatus != 0
           diff
         end
