@@ -41,8 +41,7 @@ class Mailer < ActionMailer::Base
     @issue_url = url_for(:controller => 'issues', :action => 'show', :id => issue)
     mail :to => to_users.map(&:mail),
       :cc => cc_users.map(&:mail),
-      :subject => "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] #{issue.subject}"
-    #      :subject => "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] (#{issue.status.name}) #{issue.subject}"
+      :subject => "[##{issue.id}] #{issue.subject} - #{issue.project.name} (#{issue.tracker.name})"
   end
 
   # Notifies users about a new issue
@@ -64,9 +63,9 @@ class Mailer < ActionMailer::Base
     message_id journal
     references issue
     @author = journal.user
-    s = "[#{issue.project.name} - #{issue.tracker.name} ##{issue.id}] "
+    s = ""
     #s << "(#{issue.status.name}) " if journal.new_value_for('status_id')
-    s << issue.subject
+    s << "[##{issue.id}] #{issue.subject} - #{issue.project.name} (#{issue.tracker.name})"
     @issue = issue
     @users = to_users + cc_users
     @journal = journal
@@ -111,7 +110,7 @@ class Mailer < ActionMailer::Base
     @document = document
     @document_url = url_for(:controller => 'documents', :action => 'show', :id => document)
     mail :to => document.recipients,
-      :subject => "[#{document.project.name}] #{l(:label_document_new)}: #{document.title}"
+      :subject => "#{l(:label_document_new)}: #{document.title} [#{document.project.name}]"
   end
 
   # Builds a Mail::Message object used to email recipients of a project when an attachements are added.
@@ -143,7 +142,7 @@ class Mailer < ActionMailer::Base
     @added_to = added_to
     @added_to_url = added_to_url
     mail :to => recipients,
-      :subject => "[#{container.project.name}] #{l(:label_attachment_new)}"
+      :subject => "#{l(:label_attachment_new)} [#{container.project.name}]"
   end
 
   # Builds a Mail::Message object used to email recipients of a news' project when a news item is added.
@@ -160,7 +159,7 @@ class Mailer < ActionMailer::Base
     @news_url = url_for(:controller => 'news', :action => 'show', :id => news)
     mail :to => news.recipients,
       :cc => news.cc_for_added_news,
-      :subject => "[#{news.project.name}] #{l(:label_news)}: #{news.title}"
+      :subject => "#{l(:label_news)}: #{news.title} [#{news.project.name}]"
   end
 
   # Builds a Mail::Message object used to email recipients of a news' project when a news comment is added.
@@ -179,7 +178,7 @@ class Mailer < ActionMailer::Base
     @news_url = url_for(:controller => 'news', :action => 'show', :id => news)
     mail :to => news.recipients,
      :cc => news.watcher_recipients,
-     :subject => "Re: [#{news.project.name}] #{l(:label_news)}: #{news.title}"
+     :subject => "Re: #{l(:label_news)}: #{news.title} [#{news.project.name}]"
   end
 
   # Builds a Mail::Message object used to email the recipients of the specified message that was posted.
@@ -199,7 +198,7 @@ class Mailer < ActionMailer::Base
     @message_url = url_for(message.event_url)
     mail :to => recipients,
       :cc => cc,
-      :subject => "[#{message.board.project.name} - #{message.board.name} - msg#{message.root.id}] #{message.subject}"
+      :subject => "#{message.subject} [#{message.board.project.name} - #{message.board.name} - msg#{message.root.id}]"
   end
 
   # Builds a Mail::Message object used to email the recipients of a project of the specified wiki content was added.
