@@ -337,7 +337,9 @@ module Redmine
               url = "http://" + url
             end
           end
-          view.link_to value.to_s, url
+          # shrink long urls
+          view.link_to value.to_s[0..100].gsub(/\s\w+\s*$/,'...'), url
+          #view.link_to value.to_s, url
         else
           value.to_s
         end
