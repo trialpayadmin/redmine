@@ -5,6 +5,7 @@
 #
 
 PATH="/root/.rbenv/bin:/service/app/git/bin/:$PATH"
+date # printing date
 
 function wasUpdated {
     cd $1  
@@ -33,7 +34,9 @@ done
 
 if [ $needsRestart -eq 1 ] 
 then 
-    echo "restarting redmine..."
+    echo "*** REDMINE CODE WAS UPDATED: restarting redmine..."
     /etc/init.d/redmine restart
+else
+    echo "no need to restart redmine..."
 fi
 
