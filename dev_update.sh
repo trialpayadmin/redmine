@@ -4,6 +4,8 @@
 # This is a simple script to restart redmine if the watched git repositories get updated
 #
 
+PATH="/root/.rbenv/bin:/service/app/git/bin/:$PATH"
+
 function wasUpdated {
     cd $1  
     pull=`git pull`  
