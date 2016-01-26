@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#
+# This is a simple script to restart redmine if the watched git repositories get updated
+#
+
 function wasUpdated {
     cd $1  
     pull=`git pull`  
