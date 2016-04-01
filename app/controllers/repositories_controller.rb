@@ -2,7 +2,7 @@
 # Copyright (C) 2006-2014  Jean-Philippe Lang
 #
 # This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
+# ify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
@@ -259,8 +259,8 @@ class RepositoriesController < ApplicationController
                             :type => 'text/x-patch',
                             :disposition => 'attachment'
     else
-      @diff_type = params[:type] || User.current.pref[:diff_type] || 'inline'
-      @diff_type = 'inline' unless %w(inline sbs).include?(@diff_type)
+      @diff_type = params[:type] || User.current.pref[:diff_type] || 'sbs'
+      @diff_type = 'sbs' unless %w(inline sbs).include?(@diff_type)
       @context_lines = params[:context_lines] || User.current.pref[:context_lines] || '12'
       @white_space   = params[:white_space]   || User.current.pref[:white_space] || '0'
 

@@ -4,7 +4,7 @@
 <%= form_tag({:action => 'diff', :id => @project,
               :repository_id => @repository.identifier_param,
               :path => to_path_param(@path), :rev=> @rev, 
-              :context_lines => @context_lines, :white_space => @white_space}, :method => 'get') do %>
+              :context_lines => @context_lines, :type => @diff_type, :white_space => @white_space}, :method => 'get') do %>
   <%= hidden_field_tag('rev_to', params[:rev_to]) if params[:rev_to] %>
   <p>
     <%= l(:label_view_diff) %>:
