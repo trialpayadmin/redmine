@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 gem "rails", "3.2.19"
 #gem "rails", "3.2.17"
-gem "rake", "~> 10.1.1"
+#gem "rake", "~> 10.1.1"
+gem "rake", "~> 10.5.0"
 gem "jquery-rails", "~> 2.0.2"
 gem "coderay", "~> 1.1.0"
 gem "fastercsv", "~> 1.5.0", :platforms => [:mri_18, :mingw_18, :jruby]

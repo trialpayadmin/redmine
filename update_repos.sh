@@ -11,6 +11,10 @@ cd /mnt/redmine/redmine-dt/repos/projects.git
 git fetch --all --prune
 cd /mnt/redmine/redmine-dt/repos/vcrunch.git 
 git fetch --all --prune
+cd /mnt/redmine/redmine-dt/repos/wallet_msg.git 
+git fetch --all --prune
+cd /mnt/redmine/redmine-dt/repos/datascience.git 
+git fetch --all --prune
 curl -k "https://redmine.trialpay.com/sys/fetch_changesets?key=nCPiQxPypDcGb2wTn9nZ" 
 
 
