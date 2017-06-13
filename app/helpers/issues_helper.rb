@@ -85,6 +85,7 @@ module IssuesHelper
       s << content_tag('tr',
              content_tag('td', check_box_tag("ids[]", child.id, false, :id => nil), :class => 'checkbox') +
              content_tag('td', link_to_issue(child, :truncate => 60, :project => (issue.project_id != child.project_id)), :class => 'subject') +
+             content_tag('td', (child.fixed_version ? link_to_version(child.fixed_version) : "-")) +
              content_tag('td', h(child.status)) +
              content_tag('td', h(child.priority.name)) +
              content_tag('td', link_to_user(child.assigned_to)) +
