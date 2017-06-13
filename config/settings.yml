@@ -77,6 +77,9 @@ host_name:
   default: localhost:3000
 protocol:
   default: http
+api_limit:
+  format: int
+  default: 100
 feeds_limit:
   format: int
   default: 15
