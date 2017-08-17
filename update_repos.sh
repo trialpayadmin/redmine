@@ -1,7 +1,7 @@
 #!/bin/bash
-PATH=$PATH:/service/app/git/bin
+PATH=/usr/bin:$PATH
 echo "Updating git repos and fetching changesets into redmine" 
-base=/mnt/redmine/redmine-dt/repos
+base=/mnt/redmine/redmine_v3/repos
 for repo in $(ls -d $base/*.git) 
 do
   echo Updating $repo

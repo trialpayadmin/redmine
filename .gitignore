@@ -40,3 +40,8 @@
 /Gemfile.lock
 /Gemfile.local
 
+/plugins*
+/repos
+.subversion/
+.ruby-version
+rgloader/
